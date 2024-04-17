@@ -5,14 +5,33 @@ using UnityEngine.UI;
 
 public class _DialogueManager : MonoBehaviour
 {
+    public GameObject _nameTextObject;
+    public GameObject _dialogueTextObject;
+
+    private Text _nameText;
+    private Text _dialogueText;
+
     private Queue <string> sentences;
-    private void Start()
+    private void Awake()
     {
         sentences = new Queue<string>();
+        _nameText = _nameTextObject.GetComponent<Text>();
+        _dialogueText = _dialogueTextObject.GetComponent<Text>();
+
+        if (_nameText == null)
+        {
+            Debug.LogError("Name text component not found!");
+        }
+        if (_dialogueText == null)
+        {
+            Debug.LogError("Dialogue text component not found!");
+        }
     }
     public void StartDialogue(_DialogueInput newDialogue)
     {
         Debug.Log("Started Interacting With" + newDialogue.name);
+
+        _nameText.text = newDialogue.name;
 
         sentences.Clear();
 
@@ -30,6 +49,7 @@ public class _DialogueManager : MonoBehaviour
             return;
         }
         string sentence = sentences.Dequeue();
+        _dialogueText.text = sentence;
     }
 
     public void EndDialogue()

@@ -31,8 +31,25 @@ public class _TriggerVolume : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         OnEnterTrigger.Invoke();
-        FindObjectOfType<_DialogueManager>().StartDialogue(_dialogue);
+
+        if (_dialogue != null)
+        {
+            _DialogueManager dialogueManager = FindObjectOfType<_DialogueManager>();
+            if (dialogueManager != null)
+            {
+                dialogueManager.StartDialogue(_dialogue);
+            }
+            else
+            {
+                Debug.LogWarning("Dialogue manager not found!");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Dialogue input not assigned!");
+        }
     }
+
     private void OnDrawGizmos()
     {
         if (_viewTriggerVolume == false)
