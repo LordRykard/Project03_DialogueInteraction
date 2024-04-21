@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
 
 [RequireComponent(typeof(BoxCollider))]
 public class _TriggerVolume : MonoBehaviour
@@ -54,7 +55,7 @@ public class _TriggerVolume : MonoBehaviour
     {
         if (_viewTriggerVolume == false)
             return;
-        if(_playerCollider == null)
+        if (_playerCollider == null)
         {
             _playerCollider = GetComponent<Collider>();
         }
