@@ -8,16 +8,22 @@ using System;
 [RequireComponent(typeof(BoxCollider))]
 public class _TriggerVolume : MonoBehaviour
 {
+    [Header("Preview Settings")]
+    [SerializeField] private bool _viewTriggerVolume = false;
+
+    [Header("Dialogue Settings")]
+    public _DialogueInput _dialogue;
+    public _DialogueManager dialogueManager;
+
+
+    [Header("Trigger Events")]
     public UnityEvent OnEnterTrigger;
     public UnityEvent OnExitTrigger;
-    private Collider _playerCollider;
-    public _DialogueInput _dialogue;
-
-    public UnityEvent OnTriggerKeyDown;
     public KeyCode triggerKey;
+    public UnityEvent OnTriggerKeyDown;
 
-    [Header("Gizmo Settings")] 
-    [SerializeField] private bool _viewTriggerVolume = false;
+    //private settings
+    private Collider _playerCollider;
     private bool isDialogueActive = false;
 
     private void Awake()
@@ -30,8 +36,7 @@ public class _TriggerVolume : MonoBehaviour
         if (Input.GetKeyDown(triggerKey))
         {
             OnTriggerKeyDown.Invoke();
-            _DialogueManager dialogueManager = FindObjectOfType<_DialogueManager>();
-            if (dialogueManager != null)
+            if (dialogueManager != null && !dialogueManager.IsDialogueActive())
             {
                 if (!dialogueManager.HasNextSentence())
                 {
@@ -47,7 +52,6 @@ public class _TriggerVolume : MonoBehaviour
 
             if (_dialogue != null && !isDialogueActive)
             {
-                _DialogueManager dialogueManager = FindObjectOfType<_DialogueManager>();
                 if (dialogueManager != null)
                 {
                     dialogueManager.StartDialogue(_dialogue);

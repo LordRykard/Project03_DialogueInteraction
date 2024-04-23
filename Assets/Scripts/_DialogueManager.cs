@@ -17,6 +17,9 @@ public class _DialogueManager : MonoBehaviour
     private Text _promptText;
 
     private Queue<string> sentences;
+
+    private bool dialogueActive = false;
+
     private void Awake()
     {
         sentences = new Queue<string>();
@@ -41,6 +44,8 @@ public class _DialogueManager : MonoBehaviour
     public void StartDialogue(_DialogueInput newDialogue)
     {
         Debug.Log("Started Interacting With" + newDialogue.name);
+
+        dialogueActive = true;
 
         _promptText.text = newDialogue.prompt;
 
@@ -83,9 +88,14 @@ public class _DialogueManager : MonoBehaviour
         return sentences.Count > 0;
     }
 
+    public bool IsDialogueActive()
+    {
+        return dialogueActive;
+    }
 
     public void EndDialogue()
     {
+        dialogueActive = false;
         Debug.Log("End of Conversation");
     }
 }
